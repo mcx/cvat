@@ -1,24 +1,17 @@
 // Copyright (C) 2019-2022 Intel Corporation
-// Copyright (C) 2022 CVAT.ai Corporation
+// Copyright (C) 2022-2023 CVAT.ai Corporation
 //
 // SPDX-License-Identifier: MIT
 
 import {
-    Mode,
-    DrawData,
-    MergeData,
-    SplitData,
-    GroupData,
-    MasksEditData,
+    DrawData, MergeData, SplitData, GroupData,
+    JoinData, SliceData, MasksEditData,
     InteractionData as _InteractionData,
     InteractionResult as _InteractionResult,
-    CanvasModel,
-    CanvasModelImpl,
-    RectDrawingMethod,
-    CuboidDrawingMethod,
-    Configuration,
-    Geometry,
-    HighlightSeverity as _HighlightSeverity,
+    CanvasModel, CanvasModelImpl, RectDrawingMethod,
+    CuboidDrawingMethod, Configuration, Geometry, Mode,
+    HighlightSeverity as _HighlightSeverity, CanvasHint as _CanvasHint,
+    PolyEditData,
 } from './canvasModel';
 import { Master } from './master';
 import { CanvasController, CanvasControllerImpl } from './canvasController';
@@ -34,7 +27,7 @@ interface Canvas {
     setup(frameData: any, objectStates: any[], zLayer?: number): void;
     setupIssueRegions(issueRegions: Record<number, { hidden: boolean; points: number[] }>): void;
     setupConflictRegions(clientID: number): number[];
-    activate(clientID: number | null, attributeID?: number): number[];
+    activate(clientID: number | null, attributeID?: number): void;
     highlight(clientIDs: number[] | null, severity: HighlightSeverity | null): void;
     rotate(rotationAngle: number): void;
     focus(clientID: number, padding?: number): void;
@@ -43,8 +36,10 @@ interface Canvas {
 
     interact(interactionData: InteractionData): void;
     draw(drawData: DrawData): void;
-    edit(editData: MasksEditData): void;
+    edit(editData: MasksEditData | PolyEditData): void;
     group(groupData: GroupData): void;
+    join(joinData: JoinData): void;
+    slice(sliceData: SliceData): void;
     split(splitData: SplitData): void;
     merge(mergeData: MergeData): void;
     select(objectState: any): void;
@@ -87,8 +82,8 @@ class CanvasImpl implements Canvas {
         this.model.setupIssueRegions(issueRegions);
     }
 
-    public setupConflictsRegions(clientID: number): number[] {
-        return this.view.setupConflictsRegions(clientID);
+    public setupConflictRegions(clientID: number): number[] {
+        return this.view.setupConflictRegions(clientID);
     }
 
     public fitCanvas(): void {
@@ -115,7 +110,7 @@ class CanvasImpl implements Canvas {
         this.model.activate(clientID, attributeID);
     }
 
-    public highlight(clientIDs: number[] | null, severity: HighlightSeverity | null = null): void {
+    public highlight(clientIDs: number[], severity: HighlightSeverity | null = null): void {
         this.model.highlight(clientIDs, severity);
     }
 
@@ -143,7 +138,7 @@ class CanvasImpl implements Canvas {
         this.model.draw(drawData);
     }
 
-    public edit(editData: MasksEditData): void {
+    public edit(editData: MasksEditData | PolyEditData): void {
         this.model.edit(editData);
     }
 
@@ -153,6 +148,14 @@ class CanvasImpl implements Canvas {
 
     public group(groupData: GroupData): void {
         this.model.group(groupData);
+    }
+
+    public join(joinData: JoinData): void {
+        this.model.join(joinData);
+    }
+
+    public slice(sliceData: SliceData): void {
+        this.model.slice(sliceData);
     }
 
     public merge(mergeData: MergeData): void {
@@ -189,6 +192,7 @@ class CanvasImpl implements Canvas {
 }
 
 export type InteractionData = _InteractionData;
+export type CanvasHint = _CanvasHint;
 export type InteractionResult = _InteractionResult;
 export type HighlightSeverity = _HighlightSeverity;
 

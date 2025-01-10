@@ -1,6 +1,8 @@
 ---
+title: 'Datumaro'
 linkTitle: 'Datumaro'
 weight: 1.5
+description: 'How to export and import data in Datumaro format'
 ---
 
 Datumaro serves as a versatile format capable of handling complex
@@ -18,7 +20,8 @@ For more information, see:
 
 For export of images: any 2D shapes, tags
 
-- Supported annotations: Bounding Boxes, Polygons.
+- Supported annotations: Bounding Boxes, Polygons,
+Polylines, Points, Cuboids, Tags, Ellipses, Masks, Skeletons.
 - Attributes: Supported.
 - Tracks: Supported.
 
@@ -37,7 +40,8 @@ taskname.zip/
 
 # Import annotations in Datumaro format
 
-- supported annotations: any 2D shapes, labels
+- supported annotations: Bounding Boxes, Polygons, Polylines,
+  Masks, Points, Cuboids, Labels, Skeletons
 - supported attributes: any
 
 Uploaded file: a zip archive of the following structure:

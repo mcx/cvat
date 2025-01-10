@@ -1,6 +1,8 @@
 ---
-linkTitle: 'CVAT'
+title: 'CVAT for image'
+linkTitle: 'CVAT for image'
 weight: 1
+description: 'How to export and import data in CVAT for image format'
 ---
 
 This is CVAT's native annotation format,
@@ -9,17 +11,20 @@ It is ideal for creating data backups.
 
 For more information, see:
 
-- [Format specification](/docs/manual/advanced/xml_format/)
+- {{< ilink "/docs/manual/advanced/xml_format" "Format specification" >}}
 - [Dataset examples](https://github.com/cvat-ai/datumaro/tree/v0.3/tests/assets/cvat_dataset)
 
 ## CVAT for image export
 
+ Applicable for all computer vision tasks in
+ 2D except for Video Tracking.
+
 For export of images:
 
 - Supported annotations: Bounding Boxes, Polygons, Polylines,
-  Points, Cuboids, Skeletons, Tags, Tracks
+  Points, Cuboids, Ellipses, Skeletons, Tags, Masks.
 - Attributes: Supported.
-- Tracks: Supported (tracks are split by frames).
+- Tracks: Can be exported, but track id will be lost.
 
 The downloaded file is a zip archive with following structure:
 
@@ -33,10 +38,13 @@ taskname.zip/
 
 ## CVAT for video export
 
+Applicable for all computer vision tasks
+in 2D except for Classification
+
 For export of images:
 
 - Supported annotations: Bounding Boxes, Polygons, Polylines,
-  Points, Cuboids, Skeletons, Tags, Tracks
+  Points, Cuboids, Ellipses, Skeletons,Masks.
 - Attributes: Supported.
 - Tracks: Supported (tracks are split by frames).
 - Shapes are exported as single-frame tracks
