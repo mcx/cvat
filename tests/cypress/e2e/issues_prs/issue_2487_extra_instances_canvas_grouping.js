@@ -1,5 +1,5 @@
 // Copyright (C) 2020-2022 Intel Corporation
-// Copyright (C) 2023 CVAT.ai Corporation
+// Copyright (C) CVAT.ai Corporation
 //
 // SPDX-License-Identifier: MIT
 
@@ -24,7 +24,7 @@ context('Extra instances on canvas when grouping.', () => {
             cy.get('.cvat-canvas-container').trigger('mousedown', 250, 250, { button: 0 });
             cy.get('.cvat-canvas-container').trigger('mousemove', 500, 500);
             cy.get('body').type('g');
-            cy.get('.cvat_canvas_shape_grouping').should('not.exist');
+            cy.get('.cvat_canvas_shape_selection').should('not.exist');
         });
     });
 });

@@ -1,9 +1,11 @@
 ---
+title: 'Pascal VOC'
 linkTitle: 'Pascal VOC'
 weight: 6
+description: 'How to export and import data in Pascal VOC format'
 ---
 
-he Pascal VOC (Visual Object Classes) format
+The Pascal VOC (Visual Object Classes) format
 is one of the earlier established benchmarks for object classification and detection,
 which provides a standardized image data set for object class recognition.
 
@@ -77,8 +79,6 @@ There are 2 options:
 1. match by frame number. File name should be `<number>.jpg`
    or `frame_000000.jpg`. It should be used when task was created from video.
 
-
-
 ## How to create a task from Pascal VOC dataset
 
 1. Download the Pascal Voc dataset (Can be downloaded from the
@@ -95,7 +95,7 @@ There are 2 options:
    attributes for each label if you want to use them.
 
    Select interesting image files
-   (See [Creating an annotation task](/docs/manual/basics/creating_an_annotation_task/) guide for details)
+   (See {{< ilink "/docs/manual/basics/create_an_annotation_task" "Creating an annotation task" >}} guide for details)
 
 1. zip the corresponding annotation files
 

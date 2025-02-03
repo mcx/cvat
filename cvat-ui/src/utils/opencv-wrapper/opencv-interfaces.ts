@@ -1,5 +1,5 @@
 // Copyright (C) 2021-2022 Intel Corporation
-// Copyright (C) 2023 CVAT.ai Corporation
+// Copyright (C) CVAT.ai Corporation
 //
 // SPDX-License-Identifier: MIT
 
@@ -13,6 +13,7 @@ export interface TrackerModel {
     init: (src: ImageData, points: number[]) => void;
     reinit: (points: number[]) => void;
     update: (src: ImageData) => TrackingResult;
+    delete: () => void;
 }
 
 export interface OpenCVTracker {

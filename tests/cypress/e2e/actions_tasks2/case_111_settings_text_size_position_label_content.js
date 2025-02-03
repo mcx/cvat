@@ -1,5 +1,5 @@
 // Copyright (C) 2021-2022 Intel Corporation
-// Copyright (C) 2023 CVAT.ai Corporation
+// Copyright (C) CVAT.ai Corporation
 //
 // SPDX-License-Identifier: MIT
 
@@ -138,7 +138,7 @@ context('Settings. Text size/position. Text labels content.', () => {
     }
 
     before(() => {
-        cy.visit('auth/login');
+        cy.visit('/auth/login');
         cy.login();
         cy.get('.cvat-tasks-page').should('exist').and('be.visible');
 
@@ -169,7 +169,7 @@ context('Settings. Text size/position. Text labels content.', () => {
             sorting_method: 'lexicographical',
         }).then((response) => {
             taskID = response.taskID;
-            [jobID] = response.jobID;
+            [jobID] = response.jobIDs;
         }).then(() => {
             cy.visit(`/tasks/${taskID}/jobs/${jobID}`);
             cy.get('.cvat-canvas-container').should('exist').and('be.visible');

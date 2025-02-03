@@ -1,18 +1,16 @@
 // Copyright (C) 2020-2022 Intel Corporation
-// Copyright (C) 2023 CVAT.ai Corporation
+// Copyright (C) CVAT.ai Corporation
 //
 // SPDX-License-Identifier: MIT
 
 import { AnyAction } from 'redux';
 
-import { BoundariesActionTypes } from 'actions/boundaries-actions';
 import { AuthActionTypes } from 'actions/auth-actions';
 import { SettingsActionTypes } from 'actions/settings-actions';
 import { AnnotationActionTypes } from 'actions/annotation-actions';
 import {
     SettingsState, GridColor, FrameSpeed, ColorBy,
 } from 'reducers';
-import { ObjectState, ShapeType, DimensionType } from 'cvat-core-wrapper';
 
 const defaultState: SettingsState = {
     shapes: {
@@ -438,30 +436,7 @@ export default (state = defaultState, action: AnyAction): SettingsState => {
                 imageFilters: [],
             };
         }
-        case AnnotationActionTypes.UPLOAD_JOB_ANNOTATIONS_SUCCESS:
-        case AnnotationActionTypes.CREATE_ANNOTATIONS_SUCCESS:
-        case AnnotationActionTypes.CHANGE_FRAME_SUCCESS: {
-            const { states } = action.payload;
-            if (states.some((_state: ObjectState): boolean => _state.shapeType === ShapeType.MASK)) {
-                const MIN_OPACITY = 30;
-                const { shapes: { opacity } } = state;
-                if (opacity < MIN_OPACITY) {
-                    return {
-                        ...state,
-                        shapes: {
-                            ...state.shapes,
-                            opacity: MIN_OPACITY,
-                            selectedOpacity: MIN_OPACITY * 2,
-                        },
-                    };
-                }
-            }
-
-            return state;
-        }
-        case BoundariesActionTypes.RESET_AFTER_ERROR:
         case AnnotationActionTypes.GET_JOB_SUCCESS: {
-            const { job } = action.payload;
             const filters = [...state.imageFilters];
             filters.forEach((imageFilter) => {
                 imageFilter.modifier.currentProcessedImage = null;
@@ -469,19 +444,11 @@ export default (state = defaultState, action: AnyAction): SettingsState => {
 
             return {
                 ...state,
-                player: {
-                    ...state.player,
-                },
-                shapes: {
-                    ...defaultState.shapes,
-                    ...(job.dimension === DimensionType.DIMENSION_3D ?
-                        {
-                            opacity: 40,
-                            selectedOpacity: 60,
-                        } :
-                        {}),
-                },
                 imageFilters: filters,
+                shapes: {
+                    ...state.shapes,
+                    showGroundTruth: false,
+                },
             };
         }
         case AnnotationActionTypes.INTERACT_WITH_CANVAS: {

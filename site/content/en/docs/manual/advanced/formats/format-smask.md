@@ -1,6 +1,8 @@
 ---
+title: 'Segmentation Mask'
 linkTitle: 'Segmentation Mask'
 weight: 6
+description: 'How to export and import data in Segmentation Mask format'
 ---
 
 Segmentation masks format is often used in the training of models for tasks
@@ -8,7 +10,7 @@ like semantic segmentation, instance segmentation, and panoptic segmentation.
 
 Segmentation Mask in CVAT is
 a format created by CVAT engineers
-inside the [Pascal VOC](docs/manual/advanced/formats/format-voc/)
+inside the [Pascal VOC](/docs/manual/advanced/formats/format-voc/)
 
 ## Segmentation mask export
 

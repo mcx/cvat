@@ -1,4 +1,5 @@
 // Copyright (C) 2020-2022 Intel Corporation
+// Copyright (C) CVAT.ai Corporation
 //
 // SPDX-License-Identifier: MIT
 
@@ -39,7 +40,7 @@ function mapDispatchToProps(dispatch: any): DispatchToProps {
 }
 
 function ShortcutsDialog(props: StateToProps & DispatchToProps): JSX.Element | null {
-    const { visible, switchShortcutsModalVisible, jobInstance } = props;
+    const { visible, switchShortcutsModalVisible } = props;
     const keyMap = getApplicationKeyMap();
 
     const splitToRows = (data: string[]): JSX.Element[] => data.map(
@@ -65,33 +66,25 @@ function ShortcutsDialog(props: StateToProps & DispatchToProps): JSX.Element | n
             render: splitToRows,
         },
         {
-            title: 'Action',
-            dataIndex: 'action',
-            key: 'action',
-            render: splitToRows,
-        },
-        {
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
         },
     ];
 
-    const dimensionType = jobInstance?.dimension;
     const dataSource = Object.keys(keyMap)
-        .filter((key: string) => !dimensionType || keyMap[key].applicable.includes(dimensionType))
+        .filter((key: string) => (!keyMap[key].nonActive))
         .map((key: string, id: number) => ({
             key: id,
             name: keyMap[key].name || key,
             description: keyMap[key].description || '',
             shortcut: keyMap[key].sequences,
-            action: [keyMap[key].action],
         }));
 
     return (
         <Modal
             title='Active list of shortcuts'
-            visible={visible}
+            open={visible}
             closable={false}
             width={800}
             onOk={() => switchShortcutsModalVisible(false)}

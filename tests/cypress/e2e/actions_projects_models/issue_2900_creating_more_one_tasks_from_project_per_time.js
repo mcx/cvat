@@ -1,5 +1,5 @@
 // Copyright (C) 2021-2022 Intel Corporation
-// Copyright (C) 2023 CVAT.ai Corporation
+// Copyright (C) CVAT.ai Corporation
 //
 // SPDX-License-Identifier: MIT
 
@@ -34,7 +34,9 @@ context('Create more than one task per time when create from project.', () => {
         cy.get('.cvat-constructor-viewer-new-item').should('not.exist');
         cy.get('input[type="file"]').attachFile(archiveName, { subjectType: 'drag-n-drop' });
         cy.contains('button', 'Submit & Continue').click();
-        cy.get('.cvat-notification-create-task-success').should('exist');
+        cy.get('.cvat-notification-create-task-success').should('exist').within(() => {
+            cy.get('.anticon-close').click();
+        });
         cy.get('.cvat-notification-create-task-fail').should('not.exist');
     }
 

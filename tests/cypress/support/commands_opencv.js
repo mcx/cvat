@@ -1,5 +1,5 @@
 // Copyright (C) 2022 Intel Corporation
-// Copyright (C) 2023 CVAT.ai Corporation
+// Copyright (C) CVAT.ai Corporation
 //
 // SPDX-License-Identifier: MIT
 
@@ -8,11 +8,7 @@
 let selectedValueGlobal = '';
 
 Cypress.Commands.add('interactOpenCVControlButton', () => {
-    cy.get('body').focus();
-    cy.get('.cvat-opencv-control').trigger('mouseleave');
-    cy.get('.cvat-opencv-control').trigger('mouseout');
-    cy.get('.cvat-opencv-control').trigger('mousemove');
-    cy.get('.cvat-opencv-control').trigger('mouseover');
+    cy.get('.cvat-opencv-control').click();
     cy.get('.cvat-opencv-control').should('have.class', 'ant-popover-open');
     cy.get('.cvat-opencv-control-popover')
         .should('be.visible')
@@ -73,21 +69,22 @@ Cypress.Commands.add('opencvOpenTab', (tabName) => {
         .should('have.class', 'ant-tabs-tab-active');
 });
 
-Cypress.Commands.add('createOpenCVTrack', (trackParams) => {
+Cypress.Commands.add('useOpenCVTracker', (trackParams) => {
     cy.opencvOpenTab('Tracking');
-    cy.get('.cvat-opencv-tracking-label-select').find('.ant-select-selection-item').click();
-    cy.get('.ant-select-dropdown')
-        .not('.ant-select-dropdown-hidden')
-        .find(`.ant-select-item-option[title="${trackParams.labelName}"]`)
-        .click();
     cy.get('.cvat-opencv-tracker-select').find('.ant-select-selection-item').click();
     cy.get('.ant-select-dropdown')
         .not('.ant-select-dropdown-hidden')
         .find('.ant-select-item-option-content')
         .contains(trackParams.tracker)
         .click();
-    cy.get('.cvat-tools-track-button').click();
-    trackParams.pointsMap.forEach((point) => {
-        cy.get('.cvat-canvas-container').click(point.x, point.y);
+    cy.get('.cvat-tools-opencv-track-button').click();
+    cy.get('.cvat-action-runner-content').should('exist').and('be.visible');
+    cy.get('.cvat-action-runner-list .ant-select-selection-item').should('contain', trackParams.tracker);
+    cy.get('.cvat-action-runner-action-parameters').within(() => {
+        cy.get('.ant-input-number-input').clear();
+        cy.get('.ant-input-number-input').type(trackParams.targetFrame);
     });
+    cy.runAnnotationsAction();
+    cy.waitAnnotationsAction();
+    cy.closeAnnotationsActionsModal();
 });

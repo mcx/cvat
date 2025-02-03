@@ -1,4 +1,4 @@
-// Copyright (C) 2023 CVAT.ai Corporation
+// Copyright (C) CVAT.ai Corporation
 //
 // SPDX-License-Identifier: MIT
 
@@ -15,8 +15,6 @@ import {
 } from 'actions/settings-actions';
 import GammaCorrection from 'utils/fabric-wrapper/gamma-correciton';
 import { ImageFilterAlias, hasFilter } from 'utils/image-processing';
-
-import './image-setups.scss';
 
 export default function GammaFilter(): JSX.Element {
     const dispatch = useDispatch();

@@ -1,6 +1,8 @@
 ---
+title: 'MOT'
 linkTitle: 'MOT'
 weight: 3
+description: 'How to export and import data in MOT format'
 ---
 
 The MOT (Multiple Object Tracking) sequence format is widely
@@ -18,7 +20,7 @@ For more information, see:
 
 For export of images and videos:
 
-- Supported annotations: Bounding Boxes, Tracks.
+- Supported annotations: Bounding Boxes.
 - Attributes: `visibility` (number), `ignored` (checkbox)
 - Tracks: Supported.
 
@@ -51,9 +53,10 @@ person
 Uploaded file: a zip archive of the structure above or:
 
 ```bash
-taskname.zip/
-├── labels.txt # optional, mandatory for non-official labels
-└── gt.txt
+archive.zip/
+└── gt/
+    └── gt.txt
+    └── labels.txt # optional, mandatory for non-official labels
 ```
 
 - supported annotations: Rectangle tracks
